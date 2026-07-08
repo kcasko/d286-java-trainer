@@ -5,7 +5,7 @@ import type {
   StoredProgress,
 } from '../types/Progress'
 
-const progressStorageKey = 'd286-java-trainer-attempt-progress'
+export const progressStorageKey = 'd286-java-trainer-attempt-progress'
 
 const emptyProgress: StoredProgress = {
   attempts: [],
@@ -49,6 +49,10 @@ export function saveAttempt(attempt: QuestionAttempt) {
   }
 
   localStorage.setItem(progressStorageKey, JSON.stringify(nextProgress))
+}
+
+export function writeStoredProgress(progress: StoredProgress) {
+  localStorage.setItem(progressStorageKey, JSON.stringify(progress))
 }
 
 export function resetStoredProgress() {

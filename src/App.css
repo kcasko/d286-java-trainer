@@ -315,6 +315,57 @@ p {
   outline: none;
 }
 
+.settings-group {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-soft);
+}
+
+.settings-group h3,
+.settings-group p {
+  margin: 0;
+}
+
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.danger-zone {
+  border-color: var(--danger-bg);
+}
+
+.status-message {
+  padding: 10px 12px;
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius);
+  color: var(--text);
+  background: var(--success-surface);
+  font-weight: 700;
+}
+
+.status-message.error {
+  border-color: var(--danger-bg);
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger-bg) 40%, var(--surface));
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .checklist {
   display: grid;
   gap: 10px;

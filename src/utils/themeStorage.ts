@@ -1,6 +1,6 @@
 export type AppTheme = 'dark' | 'light'
 
-const themeStorageKey = 'd286-java-trainer-theme'
+export const themeStorageKey = 'd286-java-trainer-theme'
 
 export function readTheme(): AppTheme {
   const savedTheme = localStorage.getItem(themeStorageKey)

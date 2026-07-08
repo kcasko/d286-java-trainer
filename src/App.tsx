@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { type ChangeEvent, useEffect, useMemo, useRef, useState } from 'react'
 import ConceptCard from './components/ConceptCard'
 import KeywordDecisionTrainer from './components/KeywordDecisionTrainer'
 import PracticeEngine from './components/PracticeEngine'
@@ -14,6 +14,12 @@ import {
   getWeakSpotSummaries,
   resetStoredProgress,
 } from './utils/progressStorage'
+import {
+  downloadProgressBackup,
+  restoreProgressBackup,
+  validateProgressBackup,
+  type ProgressBackup,
+} from './utils/progressBackup'
 import { readTheme, saveTheme, type AppTheme } from './utils/themeStorage'
 import './App.css'
 
@@ -163,6 +169,12 @@ function App() {
     refreshProgress()
   }
 
+  function importProgressBackup(backup: ProgressBackup) {
+    restoreProgressBackup(backup)
+    setTheme(backup.themePreference)
+    refreshProgress()
+  }
+
   function updateTheme(nextTheme: AppTheme) {
     setTheme(nextTheme)
     saveTheme(nextTheme)
@@ -236,6 +248,7 @@ function App() {
         )}
         {activePage === 'settings' && (
           <SettingsPage
+            onImportProgressBackup={importProgressBackup}
             onResetProgress={resetProgress}
             onThemeChange={updateTheme}
             theme={theme}
@@ -534,14 +547,85 @@ function ProgressPage({ refreshKey }: { refreshKey: number }) {
 }
 
 function SettingsPage({
+  onImportProgressBackup,
   onResetProgress,
   onThemeChange,
   theme,
 }: {
+  onImportProgressBackup: (backup: ProgressBackup) => void
   onResetProgress: () => void
   onThemeChange: (theme: AppTheme) => void
   theme: AppTheme
 }) {
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [backupMessage, setBackupMessage] = useState('')
+  const [backupError, setBackupError] = useState('')
+
+  function handleExportProgress() {
+    downloadProgressBackup()
+    setBackupError('')
+    setBackupMessage('Progress backup downloaded as a JSON file.')
+  }
+
+  async function handleImportProgress(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0]
+
+    setBackupError('')
+    setBackupMessage('')
+
+    if (!file) {
+      return
+    }
+
+    try {
+      const parsed = JSON.parse(await file.text()) as unknown
+      const validation = validateProgressBackup(parsed)
+
+      if (!validation.isValid) {
+        setBackupError(validation.error)
+        return
+      }
+
+      const attemptCount = validation.backup.progress.attempts.length
+      const shouldReplace = window.confirm(
+        `Replace current progress with this backup?\n\nExported: ${new Date(
+          validation.backup.exportedAt,
+        ).toLocaleString()}\nAttempts in backup: ${attemptCount}\n\nThis will overwrite the progress currently saved in this browser.`,
+      )
+
+      if (!shouldReplace) {
+        setBackupMessage('Import canceled. Current progress was not changed.')
+        return
+      }
+
+      onImportProgressBackup(validation.backup)
+      setBackupMessage(
+        `Progress restored. Imported ${attemptCount} saved attempt${
+          attemptCount === 1 ? '' : 's'
+        }.`,
+      )
+    } catch {
+      setBackupError('Could not read that file. Choose a valid JSON backup.')
+    } finally {
+      event.target.value = ''
+    }
+  }
+
+  function handleResetProgress() {
+    const shouldReset = window.confirm(
+      'Clear all saved progress from this browser?\n\nThis deletes attempts and weak-spot mistake counts. Export a backup first if you want to keep them.',
+    )
+
+    if (!shouldReset) {
+      setBackupMessage('Reset canceled. Progress was not changed.')
+      return
+    }
+
+    onResetProgress()
+    setBackupError('')
+    setBackupMessage('Local progress cleared from this browser.')
+  }
+
   return (
     <section className="panel">
       <h2>Settings</h2>
@@ -569,9 +653,48 @@ function SettingsPage({
           </button>
         </div>
       </div>
-      <button className="button danger" type="button" onClick={onResetProgress}>
-        Reset local progress
-      </button>
+      <div className="settings-group">
+        <h3>Progress backup</h3>
+        <p>
+          Export your attempts and weak spots before switching browsers,
+          clearing storage, or testing reset behavior.
+        </p>
+        <div className="settings-actions">
+          <button className="button" type="button" onClick={handleExportProgress}>
+            Export Progress
+          </button>
+          <button
+            className="button"
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            Import Progress
+          </button>
+          <input
+            accept="application/json,.json"
+            className="visually-hidden"
+            onChange={handleImportProgress}
+            ref={fileInputRef}
+            type="file"
+          />
+        </div>
+        {backupMessage && <p className="status-message">{backupMessage}</p>}
+        {backupError && <p className="status-message error">{backupError}</p>}
+      </div>
+      <div className="settings-group danger-zone">
+        <h3>Clear progress</h3>
+        <p>
+          This removes attempts and weak-spot tracking from this browser only.
+          Export a backup first if you may want the data later.
+        </p>
+        <button
+          className="button danger"
+          type="button"
+          onClick={handleResetProgress}
+        >
+          Clear Progress
+        </button>
+      </div>
     </section>
   )
 }
