@@ -28,14 +28,33 @@ Beginner Java students often understand a concept once, then freeze when they ne
 
 ## Screenshots
 
-Placeholder paths for portfolio screenshots:
+### Home
 
-- Home: `docs/screenshots/home.png`
-- Daily Drill: `docs/screenshots/daily-drill.png`
-- Java Lab Mastery: `docs/screenshots/java-lab-mastery.png`
-- Mock OA: `docs/screenshots/mock-oa.png`
-- Weak Spots: `docs/screenshots/weak-spots.png`
-- Cram Plan: `docs/screenshots/cram-plan.png`
+![Home page](docs/screenshots/home.png)
+
+### Daily Drill
+
+![Daily Drill practice session](docs/screenshots/daily-drill.png)
+
+### Java Lab Mastery Drill
+
+![Java Lab Mastery Drill](docs/screenshots/java-lab-mastery-drill.png)
+
+### Mock OA
+
+![Mock OA timed mode](docs/screenshots/mock-oa.png)
+
+### Weak Spots
+
+![Weak Spots page](docs/screenshots/weak-spots.png)
+
+### Cram Plan
+
+![Cram Plan page](docs/screenshots/cram-plan.png)
+
+### Settings Backup and Restore
+
+![Settings backup and restore tools](docs/screenshots/settings-backup-restore.png)
 
 See [docs/screenshots/README.md](docs/screenshots/README.md) for capture guidance.
 

@@ -6,10 +6,11 @@ Suggested screenshots:
 
 1. Home
 2. Daily Drill
-3. Java Lab Mastery
+3. Java Lab Mastery Drill
 4. Mock OA
 5. Weak Spots
 6. Cram Plan
+7. Settings backup/restore
 
 Recommended steps:
 
@@ -19,3 +20,4 @@ Recommended steps:
 4. Use a desktop-width browser window.
 5. Capture each page after the main content has loaded.
 6. For Weak Spots and Cram Plan, intentionally miss a few questions first so progress-based sections show useful examples.
+7. For Settings, show the Progress backup section with Export Progress and Import Progress visible.
