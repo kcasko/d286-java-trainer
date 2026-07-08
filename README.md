@@ -100,6 +100,14 @@ npm run lint
 npm run build
 ```
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local setup, question-bank guidelines, content rules, and the original-content requirement.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
 ## Production Build
 
 ```bash
@@ -135,7 +143,6 @@ The questions in this app are original Java practice questions. They are not off
 
 ## Future Roadmap
 
-- Add import/export for progress data
 - Add configurable drill length and timer settings
 - Add more code visualizers for loops, method calls, and object state changes
 - Add accessibility testing and keyboard-flow improvements
