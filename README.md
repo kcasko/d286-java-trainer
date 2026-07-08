@@ -119,13 +119,21 @@ The app uses hash-based navigation, so routes like `#/daily-drill` and `#/mock-o
 
 ## Deploy to Cloudflare Pages
 
+Live app:
+
+https://d286-java-trainer.pages.dev/
+
+Planned custom domain:
+
+https://java.casko.dev/
+
 Use these Cloudflare Pages settings:
 
 - Framework preset: `Vite`
 - Build command: `npm run build`
 - Output directory: `dist`
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for details.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for deployment details and [CUSTOM_DOMAIN.md](CUSTOM_DOMAIN.md) for the `java.casko.dev` custom domain setup.
 
 ## Demo Guide
 
