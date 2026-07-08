@@ -1,6 +1,6 @@
 # Custom Domain Setup
 
-This guide documents the planned Cloudflare Pages custom domain:
+This guide documents the active Cloudflare Pages custom domain:
 
 https://java.casko.dev/
 
@@ -9,6 +9,8 @@ The existing Cloudflare Pages project is:
 `d286-java-trainer`
 
 ## Add the Custom Domain
+
+Current status: `java.casko.dev` is active and points to the `d286-java-trainer` Cloudflare Pages project. These steps document how it was added and how to re-create it if needed.
 
 1. Go to the Cloudflare Dashboard.
 2. Open **Workers & Pages**.
